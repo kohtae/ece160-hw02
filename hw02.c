@@ -1,18 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <limits.h>
+#include <stdbool.h>
 /*
 Prints the sizes and possible ranges of four integer data types. 
 */
 void print_int_ranges() {
   // These are made up numbers that will not be correct on most systems!
   // TODO correctly compute these values! 
-  int short_bytes = 2, int_bytes = 4, uint_bytes = 4, long_bytes = 4;
+  int short_bytes = sizeof(short), int_bytes = sizeof(int), uint_bytes = sizeof(int), long_bytes = sizeof(long);
 
-  long  short_min = -32768,       short_max = 32767;
-  long  int_min   = -2147483648L, int_max   = 2147483647L;
-  long  uint_min  = 0,            uint_max  = 1 << (int_bytes * 8 - 1);
-  long  long_min  = -2147483648L, long_max  = 2147483647L;
+  long short_min = SHRT_MIN,       short_max = SHRT_MAX;
+  long int_min   = INT_MIN, int_max   = INT_MAX;
+  long uint_min  = 0,            uint_max  = UINT_MAX;
+  long long_min  = 1L << long_bytes * 8 - 1;
+  long long_max  = ~long_min;
 
   // Keep these exact printf commands :)   
   printf("short is %d bytes or %d bits and ranges from %ld to %ld\n",
@@ -39,8 +41,12 @@ int is_bit_set(unsigned char v, unsigned char i) {
   /*
   TODO your implementation goes here!
   */
-
-  return 0;
+  if (( v >> i) & 1 == true){
+    return 1;
+  }
+  if (( v >> i) & 1 == false){ 
+    return 0;
+  }
 }
 
 /*
